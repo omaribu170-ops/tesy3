@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Calendar, Trophy, Users, Clock, ArrowRight } from "lucide-react";
+import { Plus, Calendar, Trophy, Users, Clock, ArrowRight, History } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 import { formatDistanceStrict, format } from "date-fns";
