@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Calendar, Trophy, Users, Clock, ArrowRight, History } from "lucide-react";
+import { Plus, Calendar, Trophy, Users, Clock, ArrowRight, History as HistoryIcon } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 import { formatDistanceStrict, format } from "date-fns";
@@ -148,7 +148,7 @@ export default function EntertainmentPage() {
             {/* History Table */}
             <div className="space-y-4">
                 <h3 className="text-2xl font-bold flex items-center gap-2">
-                    <History className="w-6 h-6 text-gray-400" />
+                    <HistoryIcon className="w-6 h-6 text-gray-400" />
                     <span>سجل ليالي الألعاب السابقة</span>
                 </h3>
 
