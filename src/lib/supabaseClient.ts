@@ -1,21 +1,41 @@
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+// Lazy initialization - don't create client until it's actually used
+let supabaseInstance: SupabaseClient | null = null;
 
-// Create a dummy client for build time when env vars are not available
-// This allows static page generation to pass
-const createSupabaseClient = (): SupabaseClient => {
-    if (!supabaseUrl || !supabaseAnonKey) {
-        // Return a mock client during build time
-        // Supabase will work properly at runtime when env vars are set
-        return createClient(
-            'https://placeholder.supabase.co',
-            'placeholder-key'
-        );
+function getSupabase(): SupabaseClient {
+    if (supabaseInstance) {
+        return supabaseInstance;
     }
-    return createClient(supabaseUrl, supabaseAnonKey);
-};
 
-export const supabase = createSupabaseClient();
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    // During build time or when env vars are missing, throw a more helpful error
+    // This should only happen if the code actually RUNS during build (which it shouldn't with dynamic pages)
+    if (!supabaseUrl || !supabaseAnonKey) {
+        // For SSR/build, return a dummy that will be replaced at runtime
+        // This prevents the build from crashing
+        if (typeof window === 'undefined') {
+            // Server-side during build - create a placeholder that won't crash
+            supabaseInstance = createClient(
+                'https://example.supabase.co',
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4YW1wbGUiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTYwMDAwMDAwMCwiZXhwIjoxOTAwMDAwMDAwfQ.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            );
+            return supabaseInstance;
+        }
+        throw new Error('Missing Supabase environment variables. Please add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to your environment.');
+    }
+
+    supabaseInstance = createClient(supabaseUrl, supabaseAnonKey);
+    return supabaseInstance;
+}
+
+// Export a proxy that lazily gets the supabase instance
+export const supabase = new Proxy({} as SupabaseClient, {
+    get(_, prop) {
+        return getSupabase()[prop as keyof SupabaseClient];
+    }
+});
+
