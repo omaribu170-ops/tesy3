@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import { Plus, Users, DollarSign, Image as ImageIcon } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 
+// Force dynamic rendering to prevent static generation errors
+export const dynamic = 'force-dynamic';
+
 // Type definition (move to types folder later)
 type Table = {
     id: string;

@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import { ClipboardList, Plus, AlertCircle, TrendingDown, CheckSquare, Search } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 
+// Force dynamic rendering to prevent static generation errors
+export const dynamic = 'force-dynamic';
+
 export default function InventoryPage() {
     const [items, setItems] = useState<any[]>([]);
     const [cleaningLogs, setCleaningLogs] = useState<any[]>([]);

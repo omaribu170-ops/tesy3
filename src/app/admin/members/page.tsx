@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import { Plus, Search, FileDown, User, Clock, Wallet } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 
+// Force dynamic rendering to prevent static generation errors
+export const dynamic = 'force-dynamic';
+
 type Member = {
     id: string;
     full_name: string;

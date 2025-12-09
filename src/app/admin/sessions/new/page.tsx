@@ -6,6 +6,9 @@ import { useRouter } from "next/navigation"; // Correct import for App Router
 import { Search, Monitor, Users, Check } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 
+// Force dynamic rendering to prevent static generation errors
+export const dynamic = 'force-dynamic';
+
 export default function NewSessionPage() {
     const router = useRouter();
     const [step, setStep] = useState(1);

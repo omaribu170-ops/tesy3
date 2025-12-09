@@ -8,6 +8,9 @@ import Link from "next/link";
 import { formatDistanceStrict } from "date-fns";
 import { arEG } from "date-fns/locale";
 
+// Force dynamic rendering to prevent static generation errors
+export const dynamic = 'force-dynamic';
+
 type Session = {
     id: string;
     table: { name: string; rate_per_hour: number };

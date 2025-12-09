@@ -6,6 +6,9 @@ import { Copy, Share2, Users, DollarSign, ArrowLeft, TrendingUp } from "lucide-r
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
 
+// Force dynamic rendering to prevent static generation errors
+export const dynamic = 'force-dynamic';
+
 export default function AffiliatePage() {
     const [copied, setCopied] = useState(false);
     const affiliateCode = "OMAR2024"; // Mock code

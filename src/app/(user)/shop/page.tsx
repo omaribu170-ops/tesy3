@@ -6,6 +6,9 @@ import { Search, Plus, Minus, ShoppingBag, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
 
+// Force dynamic rendering to prevent static generation errors
+export const dynamic = 'force-dynamic';
+
 export default function ShopPage() {
     const [products, setProducts] = useState<any[]>([]);
     const [cart, setCart] = useState<{ [key: string]: number }>({});
@@ -83,8 +86,8 @@ export default function ShopPage() {
                             key={cat.id}
                             onClick={() => setActiveCategory(cat.id)}
                             className={`px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold transition-all ${activeCategory === cat.id
-                                    ? 'bg-gray-900 text-white shadow-lg'
-                                    : 'bg-white text-gray-500 border border-gray-100'
+                                ? 'bg-gray-900 text-white shadow-lg'
+                                : 'bg-white text-gray-500 border border-gray-100'
                                 }`}
                         >
                             {cat.label}

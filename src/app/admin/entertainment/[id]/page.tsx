@@ -5,6 +5,9 @@ import { useState, useEffect, use } from "react";
 import { Plus, Trophy, Users, CheckCircle, Clock, Trash2 } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 
+// Force dynamic rendering to prevent static generation errors
+export const dynamic = 'force-dynamic';
+
 export default function GameNightDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     // Unwrap params using use() for Next.js 15+ compatibility
     const { id } = use(params);

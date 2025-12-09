@@ -8,6 +8,9 @@ import Link from "next/link";
 import { formatDistanceStrict, format } from "date-fns";
 import { arEG } from "date-fns/locale";
 
+// Force dynamic rendering to prevent static generation errors
+export const dynamic = 'force-dynamic';
+
 type GameNight = {
     id: string;
     name: string;
